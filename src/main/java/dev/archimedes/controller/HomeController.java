@@ -2,9 +2,9 @@ package dev.archimedes.controller;
 
 import dev.archimedes.entities.Greetings;
 import dev.archimedes.repositories.GreetingRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +21,15 @@ public class HomeController {
     @GetMapping("/hello")
     public List<Greetings> getGreet(){
         return greetingRepository.findAll();
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> saveGreet(@RequestBody Greetings greetings){
+        try {
+            greetingRepository.save(greetings);
+            return new ResponseEntity<>("Greeting saved", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
