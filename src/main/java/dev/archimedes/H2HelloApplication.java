@@ -23,7 +23,6 @@ public class H2HelloApplication implements CommandLineRunner {
                 new Greetings("Hello", "This is message"),
                 new Greetings("Wish", "This is wish message")
         );
-        System.out.println("running");
         greetingRepository.saveAll(greetings);
     }
 
